@@ -18,7 +18,7 @@ import java.util.Date;
 @ApiModel(description="用户钱包表")
 @Data
 @TableName("user_wallet")
-public class UserWallet implements Serializable{
+public class Wallet implements Serializable{
     /**
      * id
      */

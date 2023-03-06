@@ -1,21 +1,21 @@
 package com.wallet.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wallet.entity.UserWalletRecord;
+import com.wallet.entity.WalletRecord;
 
 import java.util.List;
 
 /**
- * @author huanghong
+ * @author xhd
  * 金额变动明细
  */
 
-public interface UserWalletRecordService extends IService<UserWalletRecord> {
+public interface WalletRecordService extends IService<WalletRecord> {
     /**
      * 查询用户钱包金额变动详细
      *
      * @param userId 用户id
-     * @author huanghong
+     * @author xhd
      */
-    List<UserWalletRecord> getDetails(String userId);
+    List<WalletRecord> getDetails(String userId);
 }

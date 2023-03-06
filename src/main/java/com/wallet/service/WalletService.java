@@ -1,15 +1,15 @@
 package com.wallet.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.wallet.entity.UserWallet;
+import com.wallet.entity.Wallet;
 
 import java.math.BigDecimal;
 
 /**
- * @author huanghong
+ * @author xhd
  * 用户钱包信息
  */
-public interface UserWalletService  extends IService<UserWallet> {
+public interface WalletService extends IService<Wallet> {
     /**
      * 获取钱包金额
      * @param userId 用户ID

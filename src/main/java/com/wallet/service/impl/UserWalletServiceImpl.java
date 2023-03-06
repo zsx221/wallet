@@ -2,11 +2,11 @@ package com.wallet.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wallet.entity.UserWallet;
-import com.wallet.entity.UserWalletRecord;
-import com.wallet.mapper.UserWalletMapper;
-import com.wallet.service.UserWalletRecordService;
-import com.wallet.service.UserWalletService;
+import com.wallet.entity.Wallet;
+import com.wallet.entity.WalletRecord;
+import com.wallet.mapper.WalletMapper;
+import com.wallet.service.WalletRecordService;
+import com.wallet.service.WalletService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,10 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 
 @Service
-public class UserWalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWallet> implements UserWalletService {
+public class UserWalletServiceImpl extends ServiceImpl<WalletMapper, Wallet> implements WalletService {
 
     @Resource
-    private UserWalletRecordService userWalletRecordService;
+    private WalletRecordService userWalletRecordService;
 
     /**
      * 获取用户钱包
@@ -31,15 +31,15 @@ public class UserWalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWal
     @Override
     public BigDecimal getUserBalance(String userId) {
 
-        UserWallet wallet = this.getOne(Wrappers.lambdaQuery(UserWallet.class)
-                .eq(UserWallet::getUserId, userId));
+        Wallet wallet = this.getOne(Wrappers.lambdaQuery(Wallet.class)
+                .eq(Wallet::getUserId, userId));
         return wallet.getBalance();
 
     }
 
     /**
      * 消费
-     * @author huanghong
+     * @author xhd
      * @param userId 用户ID
      * @param money 金额
      * @return
@@ -47,8 +47,8 @@ public class UserWalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWal
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean consume(String userId, String money) {
-        UserWallet wallet = this.getOne(Wrappers.lambdaQuery(UserWallet.class)
-                .eq(UserWallet::getUserId, userId));
+        Wallet wallet = this.getOne(Wrappers.lambdaQuery(Wallet.class)
+                .eq(Wallet::getUserId, userId));
 
         BigDecimal balanceDecimal = new BigDecimal(money);
         BigDecimal balance = wallet.getBalance().subtract(balanceDecimal);
@@ -56,7 +56,7 @@ public class UserWalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWal
         wallet.setBalance(balance);
         boolean a = this.updateById(wallet);
 
-        UserWalletRecord userRecord = new UserWalletRecord();
+        WalletRecord userRecord = new WalletRecord();
         userRecord.setUserId(userId);
         userRecord.setCreateTime(new Date());
         userRecord.setUpdateTime(new Date());
@@ -68,7 +68,7 @@ public class UserWalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWal
     }
 
     /**
-     * @author huanghong
+     * @author xhd
      * 退款
      * @param userId 用户id
      * @param money  金额
@@ -77,8 +77,8 @@ public class UserWalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWal
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean refund(String userId, String money) {
-        UserWallet wallet = this.getOne(Wrappers.lambdaQuery(UserWallet.class)
-                .eq(UserWallet::getUserId, userId));
+        Wallet wallet = this.getOne(Wrappers.lambdaQuery(Wallet.class)
+                .eq(Wallet::getUserId, userId));
 
         BigDecimal balanceDecimal = new BigDecimal(money);
         BigDecimal balance = wallet.getBalance().add(balanceDecimal);
@@ -86,7 +86,7 @@ public class UserWalletServiceImpl extends ServiceImpl<UserWalletMapper, UserWal
         wallet.setBalance(balance);
         boolean a = this.updateById(wallet);
 
-        UserWalletRecord userRecord = new UserWalletRecord();
+        WalletRecord userRecord = new WalletRecord();
         userRecord.setUserId(userId);
         userRecord.setCreateTime(new Date());
         userRecord.setUpdateTime(new Date());
