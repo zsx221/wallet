@@ -1,6 +1,5 @@
 
 /*用户交易表user_record*/
-
 DROP TABLE IF EXISTS `user_record`;
 CREATE TABLE `user_record`  (
   `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'id',
@@ -15,6 +14,7 @@ CREATE TABLE `user_record`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户交易表' ROW_FORMAT = Dynamic;
 
 /*用户钱包表user_wallet*/
+
 DROP TABLE IF EXISTS `user_wallet`;
 CREATE TABLE `user_wallet`  (
   `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'id',
